@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class StartScreenWidget extends StatelessWidget {
   const StartScreenWidget(this.startQuiz, {super.key});
@@ -8,11 +9,8 @@ class StartScreenWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ButtonStyle style = OutlinedButton.styleFrom(
-        foregroundColor: Colors.white,
-        backgroundColor: const Color.fromARGB(255, 80, 11, 93),
-        textStyle: const TextStyle(
-          fontSize: 20,
-        ));
+      foregroundColor: Colors.white,
+    );
 
     return Center(
       child: Column(
@@ -36,19 +34,19 @@ class StartScreenWidget extends StatelessWidget {
           const SizedBox(
             height: 80,
           ),
-          const Text(
+          Text(
             'Learn Flutter the fun way!',
-            style: TextStyle(
+            style: GoogleFonts.lato(
+              color: const Color.fromARGB(255, 237, 223, 252),
               fontSize: 24,
-              color: Colors.white,
             ),
           ),
           const SizedBox(height: 30),
           OutlinedButton.icon(
             style: style,
             onPressed: startQuiz,
-            label: const Text('Start Quiz'),
             icon: const Icon(Icons.arrow_right_alt),
+            label: const Text('Start Quiz'),
           ),
         ],
       ),
