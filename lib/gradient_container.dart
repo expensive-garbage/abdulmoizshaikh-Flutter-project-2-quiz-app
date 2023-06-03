@@ -18,7 +18,7 @@
 //             ],
 //           ),
 //         ),
-//         child: const StartScreenWidget(),
+//         child: const StartScreen(),
 //       ),
 //     );
 //   }
