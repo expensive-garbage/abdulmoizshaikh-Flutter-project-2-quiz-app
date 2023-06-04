@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_project2_quiz_app/questions_screen.dart';
+import 'package:flutter_project2_quiz_app/data/questions.dart';
+import 'package:flutter_project2_quiz_app/results_screen.dart';
 import 'package:flutter_project2_quiz_app/start_screen.dart';
 
 class Quiz extends StatefulWidget {
@@ -12,20 +15,46 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
-  var activeScreen = 'start-screen';
+  List<String> _selectedAnswers = [];
+  var _activeScreen = 'start-screen';
 
-  void switchScreen() {
+  void _switchScreen() {
     setState(() {
-      activeScreen = 'questions-screen';
+      _activeScreen = 'questions-screen';
+    });
+  }
+
+  void _chooseAnswer(String answer) {
+    _selectedAnswers.add(answer);
+
+    if (_selectedAnswers.length == questions.length) {
+      setState(() {
+        _activeScreen = 'results-screen';
+      });
+    }
+  }
+
+  void restartQuiz() {
+    setState(() {
+      _activeScreen = 'questions-screen';
     });
   }
 
   @override
-  Widget build(BuildContext context) {
-    Widget screenWidget = StartScreen(switchScreen);
+  Widget build(context) {
+    Widget screenWidget = StartScreen(_switchScreen);
 
-    if (activeScreen == 'questions-screen') {
-      screenWidget = const QuestionsScreen();
+    if (_activeScreen == 'questions-screen') {
+      screenWidget = QuestionsScreen(
+        onSelectAnswer: _chooseAnswer,
+      );
+    }
+
+    if (_activeScreen == 'results-screen') {
+      screenWidget = ResultsScreen(
+        chosenAnswers: _selectedAnswers,
+        onRestart: restartQuiz,
+      );
     }
 
     return MaterialApp(
@@ -33,12 +62,12 @@ class _QuizState extends State<Quiz> {
         body: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment(0.8, 1),
-              colors: <Color>[
-                Color(0xff1f005c),
-                Color(0xff5b0060),
+              colors: [
+                Color.fromARGB(255, 78, 13, 151),
+                Color.fromARGB(255, 107, 15, 168),
               ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
           ),
           child: screenWidget,
